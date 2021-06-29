@@ -1,3 +1,9 @@
+Link to live project: https://cloudproject-bcd.herokuapp.com/
+Youtube link of full explanation : https://youtu.be/fthBS1ov40g
+
+Architecture:
+![alt text]()
+
 This code is ready to deploy on heroku. To run this code in local 
 environment please follow the steps given in the report to 
 undo all the changes done to the code to deploy on heroku.
@@ -32,8 +38,5 @@ the report.
 To view data handlers , each app has a datahandler.py file ehich contains
 all the necessary files and setting required to fetch and integrated
 various database services.
-
-
-Link to live project: https://cloudproject-bcd.herokuapp.com/
 
 Enjoy Coding !!
