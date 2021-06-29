@@ -1,5 +1,5 @@
 Link to live project: https://cloudproject-bcd.herokuapp.com/
-Youtube link of full explanation : https://youtu.be/fthBS1ov40g
+Youtube link of full explanation : https://youtu.be/RUCk3j8eG-g
 
 Architecture:
 ![alt text]()
