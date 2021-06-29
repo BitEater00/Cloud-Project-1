@@ -2,7 +2,7 @@ Link to live project: https://cloudproject-bcd.herokuapp.com/
 Youtube link of full explanation : https://youtu.be/fthBS1ov40g
 
 Architecture:
-![alt text]()
+![alt text](https://github.com/BitEater00/Cloud-Project-1/blob/master/Arch.PNG)
 
 This code is ready to deploy on heroku. To run this code in local 
 environment please follow the steps given in the report to 
