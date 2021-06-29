@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap');
+
+.navbar{
+  background-color: #594f8d!important;
+  color: #bdb8d7 !important;
+  cursor:default;
+}
+
+body{
+   background-color: #f3f5f9;
+}
+
+.active{
+  background-color: #f3f5f9 !important;
+  color: #594f8d !important;
+}

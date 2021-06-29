@@ -1,0 +1,21 @@
+{%block navbar%}
+    <a href = "/admin" class="w3-bar-item w3-button"><i class="fa fa-user"></i> ADMIN</a>
+    <a href="/admin/create" class="w3-bar-item w3-button"><i class="fa fa-plus"></i> CREATE CLUB</a>
+    <a href="/user/changepassword" class="w3-bar-item w3-button" target = "_blank"><i class="fa fa-user"></i>CHANGE PASSWORD</a>
+    {% if user.is_authenticated%}
+      <a href="/user/signout" class="w3-bar-item w3-button bg-danger"><i class="fa fa-user"></i>SIGNOUT</a>
+    {% else %}
+      <a href="/user/login?next=/admin" class="w3-bar-item w3-button"><i class="fa fa-user"></i>SIGNIN</a>
+    {%endif%}
+{%endblock navbar%}
+
+{%block menunavbar%}
+    <a href="/admin" onclick="w3_close()" class="w3-bar-item w3-button">ADMIN</a>
+    <a href="/admin/create" onclick="w3_close()" class="w3-bar-item w3-button">CREATE CLUB</a>
+    <a href="/user/changepassword" onclick="w3_close()" class="w3-bar-item w3-button" target = "_blank">CHANGE PASSWORD</a>
+    {% if user.is_authenticated%}
+        <a href="/user/signout" onclick="w3_close()" class="w3-bar-item w3-button">SIGNOUT</a>
+    {%else%}
+        <a href="/user/login?next=/admin" onclick="w3_close()" class="w3-bar-item w3-button">SIGNIN</a>
+    {%endif%}
+{%endblock menunavbar%}

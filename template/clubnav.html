@@ -1,0 +1,21 @@
+{%block navbar%}
+    <a href="/club/create" class="w3-bar-item w3-button"><i class="fa fa-plus"></i> CREATE EVENTS</a>
+    <a href="/club" class="w3-bar-item w3-button"><i class="fa fa-home"></i> HOME</a>
+    <a href="/user/profile/" class="w3-bar-item w3-button"><i class="fa fa-user"></i>PROFILE</a>
+    {% if user.is_authenticated%}
+      <a href="/user/signout" class="w3-bar-item w3-button bg-danger"><i class="fa fa-user"></i>SIGNOUT</a>
+    {% else %}
+      <a href="/user/login?next=/club" class="w3-bar-item w3-button"><i class="fa fa-user"></i>SIGNIN</a>
+    {%endif%}
+{%endblock navbar%}
+
+{%block menunavbar%}
+    <a href="/club/create" onclick="w3_close()" class="w3-bar-item w3-button">CREATE EVENTS</a>
+    <a href="/club" onclick="w3_close()" class="w3-bar-item w3-button">HOME</a>
+    <a href="/user/profile/" onclick="w3_close()" class="w3-bar-item w3-button">PROFILE</a>
+  {% if user.is_authenticated%}
+        <a href="/user/signout" onclick="w3_close()" class="w3-bar-item w3-button">SIGNOUT</a>
+  {%else%}
+        <a href="/user/login?next=/club" onclick="w3_close()" class="w3-bar-item w3-button">SIGNIN</a>
+  {%endif%}
+{%endblock menunavbar%}

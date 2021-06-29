@@ -1,0 +1,128 @@
+{%extends "base.html"%}
+{%load static %}
+{%load subscription%}
+
+{%block extracss%}
+    <link rel = "stylesheet" href = {%static 'css/club.css'%}>
+{%endblock extracss%}
+
+{%block navbar%}
+    <a href="/event" class="w3-bar-item w3-button"><i class="fa fa-th"></i> EVENTS</a>
+    <a href="/club/clubs" class="w3-bar-item w3-button"><i class="fa fa-th"></i> CLUBS</a>
+    <a href="/student" class="w3-bar-item w3-button"><i class="fa fa-home"></i> HOME</a>
+    <a href="/user/profile/" class="w3-bar-item w3-button"><i class="fa fa-user"></i>PROFILE</a>
+    {% if user.is_authenticated%}
+      <a href="/user/signout" class="w3-bar-item w3-button bg-danger"><i class="fa fa-user"></i>SIGNOUT</a>
+    {% else %}
+      <a href="/user/login?next=/club/id/{{club.clubId}}" class="w3-bar-item w3-button"><i class="fa fa-user"></i>SIGNIN</a>
+    {%endif%}
+{%endblock navbar%}
+
+{%block menunavbar%}
+    <a href="/event" onclick="w3_close()" class="w3-bar-item w3-button">EVENTS</a>
+    <a href="/club/clubs" onclick="w3_close()" class="w3-bar-item w3-button">CLUBS</a>
+    <a href="/student" onclick="w3_close()" class="w3-bar-item w3-button">HOME</a>
+    <a href="/user/profile/" onclick="w3_close()" class="w3-bar-item w3-button">PROFILE</a>
+  {% if user.is_authenticated%}
+        <a href="/user/signout" onclick="w3_close()" class="w3-bar-item w3-button">SIGNOUT</a>
+  {%else%}
+        <a href="/user/login?next=/club/id/{{club.clubId}}" onclick="w3_close()" class="w3-bar-item w3-button">SIGNIN</a>
+  {%endif%}
+{%endblock menunavbar%}
+
+{%block body%}
+<body style="background-color: #f3f5f9;">
+    <div id="root"> 
+        <div class="container-fluid align-middle mt-5">
+            <div class="row align-middle justify-content-center mt-5">
+                <div class="col-lg-9 col-md-12 shadow-lg p-3 mb-5 bg-body rounded px-0 py-0">
+                    <div class = "row justify-content-center">
+                        
+                        <div class = "col-12 bg-image" style = "background-image : url({% static 'img/landingpage.jpg' %})">
+                            <div class = "card-overlay p-5">
+                                <h1 class = "ms-5">{{club.clubName}}</h1>
+                                <div class = "row ms-5">
+                                    <div class = "col mt-5">
+                                        {%if club.instaLink|length != 0%}
+                                            <a href = "{{club.instaLink}}" ><i class="fa fa-instagram fa-2x mx-1"></i></a>
+                                        {%endif%}
+
+                                        {%if club.linkedinLink|length != 0%}
+                                            <a href = "{{club.linkedinLink}}"><i class="fa fa-linkedin-square fa-2x mx-1"></i></a>
+                                        {%endif%}
+
+                                        {%if club.twitterLink|length != 0%}
+                                            <a href = "{{club.twitterLink}}"><i class="fa fa-twitter-square fa-2x mx-1"></i></a>
+                                        {%endif%}
+
+                                        {%if club.whatsappLink|length != 0%}
+                                            <a href = "{{club.whatsappLink}}"><i class="fa fa-whatsapp fa-2x mx-1"></i></a>
+                                        {%endif%}
+
+                                        {%if club.youtubeLink|length != 0%}
+                                            <a href = "{{club.youtubeLink}}"><i class="fa fa-youtube-play fa-2x mx-1"></i></a>
+                                        {%endif%}
+
+                                        {%if club.telegramLink|length != 0%}
+                                            <a href = "{{club.telegramLink}}"><i class="fa fa-telegram fa-2x mx-1"></i></a>
+                                        {%endif%}
+
+                                        {%if club.discordLink|length != 0%}
+                                            <a href = "{{club.discordLink}}"><i class="fa fa-discord fa-2x mx-1"></i></a>
+                                        {%endif%}
+
+                                    </div>
+                                </div>
+                               <div class = "row align-item-end mt-5 ms-5">
+                               {%if user.is_authenticated%}
+                                    <form method = "post">
+                                        {%csrf_token%}
+                                        {%if user.username|isStudentSubscribed:club.clubId %}
+                                            <button type = "submit" class = "btn btn-info" name = "action" value = "Subscription">Subscribe</button>
+                                        {%else%}
+                                            <button type = "submit" class = "btn btn-danger" name = "action" value = "Unsubscription">Unsubscribe</button>
+                                        {%endif%}
+                                        <input type = "hidden" name  = "studentId" value = {{user.get_username}}>
+                                        <input type = "hidden" name = "clubId" value = {{club.clubId}}>
+                                    </form>
+                                {%else%}
+                                    <h2> Login to subscribe </h2>
+                                {%endif%}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class = "row mt-5">
+                            <h2> About Us </h2>
+                            <p class = "mt-4">
+                            {{club.clubDescription}}
+                            </p>
+
+                            <h2>Upcoming Events </h2>
+
+                            {%for event in upcoming%}
+                                <a href = "{{"/event/"|add:event.eventId}}" target = "_blank"><h5>{{event.eventName}}</h5></a>
+                            {%empty%}
+                            <p class = "mt-2" style = "font-weight:bold;">
+                                There are no upcoming events at the moment. Please check again soon.
+                            </p>
+                            {%endfor%}
+
+                            <h2> Past Events </h2>
+                            {%for event in past%}
+                                <a href = "{{"/event/"|add:event.eventId}}" target = "_blank"><h5>{{event.eventName}}</h5></a>
+                            {%empty%}
+                            <p class = "mt-2" style = "font-weight:bold;">
+                                There are no past events at the moment. Please check again soon.
+                            </p>
+                            {%endfor%}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+{%endblock body%}

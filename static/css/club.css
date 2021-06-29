@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+
+body, html {
+    font-family: 'Open Sans', sans-serif;
+    height: 100%;
+}
+
+* {
+    box-sizing: border-box;
+}
+  
+.bg-image {
+    /* Add the blur effect */
+    /*filter: blur(2px); */
+    /*-webkit-filter: blur(2px); */
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.card-overlay{
+    background: rgba(0, 0, 0, 0.7) !important;
+    color: white;
+}

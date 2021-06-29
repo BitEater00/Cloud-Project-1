@@ -1,0 +1,25 @@
+.scrollmaker{
+    overflow-y: auto;
+    height: 20rem;
+    --scrollbarBG: #CFD8DC;
+    --thumbBG: #90A4AE;
+}
+
+.scrollmaker::-webkit-scrollbar {
+    width: 11px;
+}
+
+.scrollmaker {
+    scrollbar-width: thin;
+    scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+}
+
+.scrollmaker::-webkit-scrollbar-track {
+    background: var(--scrollbarBG);
+}
+
+.scrollmaker::-webkit-scrollbar-thumb {
+    background-color: var(--thumbBG) ;
+    border-radius: 6px;
+    border: 3px solid var(--scrollbarBG);
+}

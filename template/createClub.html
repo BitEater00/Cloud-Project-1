@@ -1,0 +1,108 @@
+{%extends 'base.html'%}
+{%load static %}
+
+{%block navbar%}
+    <a href = "/admin" class="w3-bar-item w3-button"><i class="fa fa-user"></i> ADMIN</a>
+    <a href="/admin/create" class="w3-bar-item w3-button"><i class="fa fa-plus"></i> CREATE CLUB</a>
+    <a href="/user/changepassword" class="w3-bar-item w3-button" target = "_blank"><i class="fa fa-user"></i>CHANGE PASSWORD</a>
+    {% if user.is_authenticated%}
+      <a href="/user/signout" class="w3-bar-item w3-button bg-danger"><i class="fa fa-user"></i>SIGNOUT</a>
+    {% else %}
+      <a href="/user/login?next=/admin" class="w3-bar-item w3-button"><i class="fa fa-user"></i>SIGNIN</a>
+    {%endif%}
+{%endblock navbar%}
+
+{%block menunavbar%}
+    <a href="/admin" onclick="w3_close()" class="w3-bar-item w3-button">ADMIN</a>
+    <a href="/admin/create" onclick="w3_close()" class="w3-bar-item w3-button">CREATE CLUB</a>
+    <a href="/user/changepassword" class="w3-bar-item w3-button" target = "_blank"><i class="fa fa-user"></i>CHANGE PASSWORD</a>
+    {% if user.is_authenticated%}
+        <a href="/user/signout" onclick="w3_close()" class="w3-bar-item w3-button">SIGNOUT</a>
+    {%else%}
+        <a href="/user/login?next=/admin" onclick="w3_close()" class="w3-bar-item w3-button">SIGNIN</a>
+    {%endif%}
+{%endblock menunavbar%}
+
+
+{%block body%}
+    
+    <div class = "container-fluid" style="padding:128px 16px;">
+        <div class = "row justify-content-center">
+            <div class = "mx-lg-4 col-lg-4 col-md-12">
+                <h3> Upload Poster</h3>
+                <h4>(JPEG , PNG format accepted)</h4>
+                <br>
+                <input type="file"  id="imgposter" name="imgposter" accept="image/png, image/jpeg" onchange = "imageLoader()">
+                <br><br>
+                <script>
+                    function imageLoader(){
+                            var preview = document.getElementById('poster');
+                            var file    = document.querySelector('input[type=file]').files[0];
+                            var reader  = new FileReader();
+                            
+                            reader.onloadend = function () {
+                                preview.src = reader.result;
+                            }
+                            
+                            if (file) {
+                                reader.readAsDataURL(file);
+                            } else {
+                                preview.src = "";
+                            }
+                        }
+                </script>
+                <img src = "" class = "img img-fluid" alt = "poster" id = "poster">
+                <br><br>
+                <input type = "submit" name = "action" value = "Upload" id = "uploadImg">
+                <br><br>
+                <h5 style = "color : #ff0000">(Please upload the poster to make the club registeration button visible)</h5>
+            </div>
+            <div class = "col-lg-7 col-md-12">
+                <h2 class = "mb-5 mx-auto">Register Club</h2>
+                <form method="post"  class= "mx-auto">
+                    {% csrf_token %}
+                    <label for = "clubName">Club Name</label><br>
+                    <input type = "text" id = "clubName" name = "clubName" value ="" required><br><br>
+                    <label for = "clubEmail">Club Email </label><br>
+                    <input type = "email" id = "clubEmail" name = "clubEmail" value ="" required><br><br>
+                    <label for = "clubDescription">Club Description</label><br>
+                    <textarea id = "clubDescription" name = "clubDescription" cols = "50" rows = "10" required></textarea><br><br>
+                    <input type = "hidden" value = "" name = "imgUrl" id = "imgUrl">
+                    <input type="submit" name = "action" value = "RegisterClub" id = "RegisterButton">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {% if password %}
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">One Time Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h3>{{password}}</h3>
+                    This is a one time password for the club. If you lose it contact admin for assistance. 
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+                </div>
+            </div>
+        </div>
+        <script>
+        window.onload = () => {
+            console.log("called")
+            let myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'))
+            myModal.show()
+        }
+        </script>
+    {%endif%}
+   <script src="https://www.gstatic.com/firebasejs/8.3.3/firebase-app.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/8.3.3/firebase-auth.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/8.3.3/firebase-firestore.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/8.3.3/firebase-storage.js"></script>
+   <script src = {%static 'js/createClub.js' %} />
+{%endblock body%}

@@ -1,0 +1,67 @@
+{%extends 'base.html'%}
+{%load static %}
+{%block extracss%}
+    <link rel = "stylesheet" href = {%static 'css/studentprofile.css'%}>
+{%endblock extracss%}
+
+{%block navbar%}
+    <a href="/event" class="w3-bar-item w3-button"><i class="fa fa-th"></i> EVENTS</a>
+    <a href="/club/clubs" class="w3-bar-item w3-button"><i class="fa fa-th"></i> CLUBS</a>
+    <a href="/student" class="w3-bar-item w3-button"><i class="fa fa-home"></i> HOME</a>
+    <a href="/user/changepassword/" class="w3-bar-item w3-button"><i class="fa fa-user" target = "_blank"></i>CHANGE PASSWORD</a>
+    {% if user.is_authenticated%}
+      <a href="/user/signout" class="w3-bar-item w3-button bg-danger"><i class="fa fa-user"></i>SIGNOUT</a>
+    {% else %}
+      <a href="/user/login?next=/event" class="w3-bar-item w3-button"><i class="fa fa-user"></i>SIGNIN</a>
+    {%endif%}
+{%endblock navbar%}
+
+{%block menunavbar%}
+    <a href="/event" onclick="w3_close()" class="w3-bar-item w3-button">EVENTS</a>
+    <a href="/club/clubs" onclick="w3_close()" class="w3-bar-item w3-button">CLUBS</a>
+    <a href="/student" onclick="w3_close()" class="w3-bar-item w3-button">HOME</a>
+    <a href="/user/changepassword/" onclick="w3_close()" class="w3-bar-item w3-button" target = "_blank">CHANGE PASSWORD</a>
+  {% if user.is_authenticated%}
+        <a href="/user/signout" onclick="w3_close()" class="w3-bar-item w3-button">SIGNOUT</a>
+  {%else%}
+        <a href="/user/login?next=/event" onclick="w3_close()" class="w3-bar-item w3-button">SIGNIN</a>
+  {%endif%}
+{%endblock menunavbar%}
+
+
+
+{%block body%}
+<div class="page-content page-container" id="page-content" style="padding:128px 16px;">
+    <div class="padding">
+        <div class="row container d-flex justify-content-center">
+            <div class="col-xl-6 col-md-12">
+                <div class="card user-card-full">
+                    <div class="row m-l-0 m-r-0">
+                        <div class="col-sm-4 bg-c-lite-green user-profile">
+                            <div class="card-block text-center text-white">
+                                <div class="m-b-25"> <img src="https://img.icons8.com/bubbles/100/000000/user.png" class="img-radius" alt="User-Profile-Image"> </div>
+                                <h6 class="f-w-600">{{studentData.studentName}}</h6>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="card-block">
+                                <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Information</h6>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <p class="m-b-10 f-w-600">Email</p>
+                                        <h6 class="text-muted f-w-400">{{studentData.studentEmail}}</h6>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <p class="m-b-10 f-w-600">ID</p>
+                                        <h6 class="text-muted f-w-400">{{studentData.studentId}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock body%}

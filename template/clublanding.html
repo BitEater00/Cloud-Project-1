@@ -1,0 +1,87 @@
+{% extends 'base.html'%}
+{% load static%}
+
+{%block navbar%}
+    <a href="/club/create" class="w3-bar-item w3-button"><i class="fa fa-plus"></i> CREATE EVENTS</a>
+    <a href="/club" class="w3-bar-item w3-button"><i class="fa fa-home"></i> HOME</a>
+    <a href="/user/profile/" class="w3-bar-item w3-button"><i class="fa fa-user"></i>PROFILE</a>
+    {% if user.is_authenticated%}
+      <a href="/user/signout" class="w3-bar-item w3-button bg-danger"><i class="fa fa-user"></i>SIGNOUT</a>
+    {% else %}
+      <a href="/user/login?next=/club" class="w3-bar-item w3-button"><i class="fa fa-user"></i>SIGNIN</a>
+    {%endif%}
+{%endblock navbar%}
+
+{%block menunavbar%}
+    <a href="/club/create" onclick="w3_close()" class="w3-bar-item w3-button">CREATE EVENTS</a>
+    <a href="/club" onclick="w3_close()" class="w3-bar-item w3-button">HOME</a>
+    <a href="/user/profile/" onclick="w3_close()" class="w3-bar-item w3-button">PROFILE</a>
+  {% if user.is_authenticated%}
+        <a href="/user/signout" onclick="w3_close()" class="w3-bar-item w3-button">SIGNOUT</a>
+  {%else%}
+        <a href="/user/login?next=/club" onclick="w3_close()" class="w3-bar-item w3-button">SIGNIN</a>
+  {%endif%}
+{%endblock menunavbar%}
+
+{%block body%}
+    <div class = "w3-container" style="padding:128px 16px;">
+        <div class = "container-fluid" style = "height = 0.7vmax"></div>
+        <div class = "container-fluid">
+            <h1>Live Events</h1>
+            <div class = "container-fluid" style = "height = 0.7vmax"></div>
+
+            <div class = "row">
+
+               {% for event in events%}
+                <div class="col-lg-3 col-md-6 my-2">
+                    <div class="card mb-30 border border-1 border-bottom border-start border-end hover_fun" id = "card1">
+                        <img src= "{{event.eventPosterURL}}" alt="" class = "card-img-top img-fluid">
+                        <div class="card-body">
+                            <div class="place-cap-top">
+                                <h3 class="mt-3">
+                                    <div style="font-family: 'Barlow Condensed'; color:#072740; font-weight: 500;">
+                                        {{event.eventName}}
+                                    </div>
+                                </h3>
+                            </div>
+                            <div class = "row mt-5">
+                                <div class = "col-6  justify-content-end">
+                                    <form method = "POST">
+                                        {%csrf_token%}
+                                        <input type = "hidden" value = {{event.eventId}} name = "Id">
+                                        <button type = "submit" class = "btn btn-danger" name = "action" value = "Deletion">Delete</button>
+                                    </form>
+                                </div>
+                                
+                                <div class = "col-6  justify-content-end">
+                                    <a type = "button" class = "btn btn-info" href = "{{"/event/registration/"|add:event.eventId}}" target = "_blank">Participants</a>
+                                </div>
+
+                                <div  class = "col-12 justify-content-end">
+                                    {%if event.acceptResponse %}
+                                    <form method = "POST">
+                                        {%csrf_token%}
+                                        <input type = "hidden" value = {{event.eventId}} name = "Id">
+                                        <button type = "submit" class = "btn btn-warning" name = "action" value = "stopregistration">Stop Registration </button>
+                                    </form> 
+                                    {%else%}
+                                    <form method = "POST">
+                                        {%csrf_token%}
+                                        <input type = "hidden" value = {{event.eventId}} name = "Id">
+                                        <button type = "submit" class = "btn btn-success" name = "action" value = "startregistration">Start Registration </button>
+                                    </form>
+                                    {%endif%}
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {%empty%}
+                <h3 class = "mt-5">No Live Events. Create Event to add one</h3>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+{%endblock body%}
